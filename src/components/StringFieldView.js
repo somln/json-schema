@@ -1,12 +1,17 @@
 import React from 'react';
+import Ajv from 'ajv';
 
-const StringFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, minLength, maxLength, pattern = null }) => {
+const StringFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, schema }) => {
+    const ajv = new Ajv();
+    const validate = ajv.compile(schema);
 
     const handleValueChange = (e) => {   
         const newValue = e.target.value;
-        if (isForEdit) {    
-            updateData(newValue);   
-            updateIsValidMap(true);  
+        if (isForEdit) {
+            updateData(newValue);
+
+            const valid = validate(newValue);
+            updateIsValidMap(valid);
         }
     };
 
@@ -22,9 +27,9 @@ const StringFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit,
                     onChange={handleValueChange}
                     readOnly={!isForEdit} 
                     className="input-text"
-                    minLength={minLength} 
-                    maxLength={maxLength}  
-                    pattern={pattern || undefined} 
+                    minLength={schema.minLength}  
+                    maxLength={schema.maxLength}  
+                    pattern={schema.pattern} 
                 />
             </div>
         </div>

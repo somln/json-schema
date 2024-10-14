@@ -1,11 +1,17 @@
 import React from "react";
+import Ajv from 'ajv';
 
-const CategoricalStringFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, options }) => {
+const CategoricalStringFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, schema }) => {
+    const ajv = new Ajv();
+    const validate = ajv.compile(schema);
+
     const handleValueChange = (e) => {
         const newValue = e.target.value;
         if (isForEdit) {
             updateData(newValue);
-            updateIsValidMap(true);
+
+            const valid = validate(newValue);
+            updateIsValidMap(valid);
         }
     };
 
@@ -21,7 +27,7 @@ const CategoricalStringFieldView = ({ title, data, updateData, updateIsValidMap,
                     readOnly={!isForEdit}
                     className="input-text"
                 >
-                    {options.map((option, index) => (
+                    {schema.enum.map((option, index) => (
                         <option key={index} value={option}>
                             {option}
                         </option>
@@ -30,6 +36,6 @@ const CategoricalStringFieldView = ({ title, data, updateData, updateIsValidMap,
             </div>
         </div>
     );
-}
+};
 
 export default CategoricalStringFieldView;

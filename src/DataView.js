@@ -1,43 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import BooleanFieldView from './components/BooleanFieldView';
 import StringFieldView from './components/StringFieldView';
 import NumberFieldView from './components/NumberFieldView';
 import CategoricalStringFieldView from './components/CategoricalStringFieldView';
 import './css/DataView.css';
-import Ajv from 'ajv';
-import schema from './dataSchema.json'; 
+import schema from './dataSchema.json';
 
 const DataView = () => {
     const [booleanData, setBooleanData] = useState(true); 
     const [stringData, setStringData] = useState('Hello'); 
     const [numberData, setNumberData] = useState(0); 
     const [selectedCategory, setSelectedCategory] = useState('Option 1'); 
-    const [isValid, setIsValid] = useState(true); 
+    const [isValid, setIsValid] = useState({ booleanData: true, stringData: true, numberData: true, selectedCategory: true }); 
     const [isEditMode, setIsEditMode] = useState(false);
 
-    const ajv = new Ajv({ allErrors: true }); 
-    const validate = ajv.compile(schema); 
-
-    useEffect(() => {
-        const formData = {
-            booleanData,
-            stringData,
-            numberData,
-            selectedCategory
-        };
-    
-        const valid = validate(formData); 
-        setIsValid(valid); 
-    }, [booleanData, stringData, numberData, selectedCategory, validate]);
+    const handleFieldValidity = (fieldName, isFieldValid) => {
+        setIsValid(prevState => ({
+            ...prevState,
+            [fieldName]: isFieldValid
+        }));
+    };
 
     const handleEditClick = () => {
         setIsEditMode(true);
     };
 
     const handleSaveClick = () => {
-        if (!isValid) {
-            console.error('Validation errors:', validate.errors); 
-            alert('데이터가 스키마 조건에 맞지 않습니다.');
+        if (Object.values(isValid).includes(false)) {
+            alert('유효하지 않은 데이터가 있습니다. 다시 확인해주세요.');
             return;
         }
 
@@ -56,7 +46,8 @@ const DataView = () => {
                     title={schema.properties.booleanData.title}
                     data={booleanData} 
                     updateData={setBooleanData} 
-                    updateIsValidMap={setIsValid}
+                    schema={schema.properties.booleanData} 
+                    updateIsValidMap={(isValid) => handleFieldValidity('booleanData', isValid)}
                     isForEdit={isEditMode}
                 />
             </div>
@@ -65,10 +56,9 @@ const DataView = () => {
                     title={stringSchema.title}
                     data={stringData} 
                     updateData={setStringData} 
-                    updateIsValidMap={setIsValid}
+                    schema={stringSchema} 
+                    updateIsValidMap={(isValid) => handleFieldValidity('stringData', isValid)}
                     isForEdit={isEditMode}
-                    minLength={stringSchema.minLength}  
-                    maxLength={stringSchema.maxLength}  
                 />
             </div>
             <div>
@@ -76,11 +66,9 @@ const DataView = () => {
                     title={numberSchema.title}
                     data={numberData} 
                     updateData={setNumberData} 
-                    updateIsValidMap={setIsValid}
+                    schema={numberSchema} 
+                    updateIsValidMap={(isValid) => handleFieldValidity('numberData', isValid)}
                     isForEdit={isEditMode}
-                    min={numberSchema.minimum}  
-                    max={numberSchema.maximum}  
-                    step={1}  
                 />
             </div>
             <div>
@@ -88,9 +76,9 @@ const DataView = () => {
                     title={categorySchema.title}
                     data={selectedCategory} 
                     updateData={setSelectedCategory} 
-                    updateIsValidMap={setIsValid}
+                    schema={categorySchema} 
+                    updateIsValidMap={(isValid) => handleFieldValidity('selectedCategory', isValid)}
                     isForEdit={isEditMode}
-                    options={categorySchema.enum}  
                 />
             </div>
 
@@ -98,7 +86,7 @@ const DataView = () => {
                 <button onClick={handleEditClick} disabled={isEditMode}>
                     수정
                 </button>
-                <button onClick={handleSaveClick} disabled={!isEditMode || !isValid}>
+                <button onClick={handleSaveClick} disabled={!isEditMode || Object.values(isValid).includes(false)}>
                     저장
                 </button>
             </div>

@@ -1,46 +1,35 @@
 import React from 'react';
 import Switch from "react-switch";
+import Ajv from 'ajv';
 import '../css/BooleanFieldView.css'; 
 
-const BooleanFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit }) => {
+const BooleanFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, schema }) => {
+    const ajv = new Ajv();
+    const validate = ajv.compile(schema);
 
     const handleValueChange = (newValue) => {   
-        if (isForEdit) {   
-            updateData(newValue);   
-            updateIsValidMap(true); 
-        } else {
-            return;
+        if (isForEdit) {
+            updateData(newValue);
+
+            const valid = validate(newValue);
+            updateIsValidMap(valid);
         }
     };
 
     return (
         <div className="boolean-field-container">
-            {/* title */}
             <div className="boolean-field-title">
                 <span>{title}</span>
             </div>
-            {/* switch */}
             <div className="boolean-field-switch">
-                <div className="boolean-field-switch-inner">
-                    {
-                        isForEdit ? 
-                            <Switch
-                                checked={data}
-                                onChange={handleValueChange}
-                                uncheckedIcon={false}
-                                checkedIcon={false}
-                                onColor={"#52b640"}
-                            /> 
-                            : 
-                            <Switch
-                                checked={data}
-                                onChange={() => {}}
-                                uncheckedIcon={false}
-                                checkedIcon={false}
-                                onColor={"#008000"}
-                            />
-                    }
-                </div>
+                <Switch
+                    checked={data}
+                    onChange={handleValueChange}
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    onColor={"#52b640"}
+                    readOnly={!isForEdit}
+                />
             </div>
         </div>
     );
