@@ -1,6 +1,5 @@
 import React from 'react';
-import './App.css';
-import DataView from 'components/DataView';
+import DataView from './DataView';
 
 function App() {
   return (

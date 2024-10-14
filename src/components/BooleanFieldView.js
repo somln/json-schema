@@ -1,28 +1,27 @@
 import React from 'react';
 import Switch from "react-switch";
+import '../css/BooleanFieldView.css'; 
 
 const BooleanFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit }) => {
 
-    const handleValueChange = (newValue) => {
-        if (isForEdit) {
-            updateData(newValue);
-            updateIsValidMap(true);
+    const handleValueChange = (newValue) => {   
+        if (isForEdit) {   
+            updateData(newValue);   
+            updateIsValidMap(true); 
         } else {
             return;
         }
     };
 
     return (
-        <div style={{ width: '100%' }}>
+        <div className="boolean-field-container">
             {/* title */}
-            <div style={{ width: '100%', paddingLeft: '5px', textAlign: 'left' }}>
-                <span style={{ fontSize: '14px', color: '#8f8f8f', paddingLeft: '5px' }}>
-                    {title}
-                </span>
+            <div className="boolean-field-title">
+                <span>{title}</span>
             </div>
             {/* switch */}
-            <div style={{ width: '100%', marginTop: '5px' }}>
-                <div style={{ width: '100%', textAlign: 'left' }}>
+            <div className="boolean-field-switch">
+                <div className="boolean-field-switch-inner">
                     {
                         isForEdit ? 
                             <Switch

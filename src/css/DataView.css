@@ -1,0 +1,7 @@
+.dataView-container {
+    display: flex;
+    flex-direction: column;  /* 요소들을 세로로 나열 */
+    justify-content: center;  /* 수평 중앙 정렬 */
+    align-items: center;      /* 수직 중앙 정렬 */
+    height: 100vh;            /* 화면의 전체 높이를 차지 */
+}

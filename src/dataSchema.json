@@ -1,0 +1,28 @@
+{
+    "type": "object",
+    "properties": {
+      "booleanData": {
+        "type": "boolean",
+        "title": "Boolean Data"
+      },
+      "stringData": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 20,
+        "title": "String Data"
+      },
+      "numberData": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "title": "Number Data"
+      },
+      "selectedCategory": {
+        "type": "string",
+        "enum": ["Option 1", "Option 2", "Option 3"],
+        "title": "Category Data"
+      }
+    },
+    "required": ["booleanData", "stringData", "numberData", "selectedCategory"]
+  }
+  
