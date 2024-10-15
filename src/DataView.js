@@ -7,11 +7,11 @@ import './css/DataView.css';
 import schema from './dataSchema.json';
 
 const DataView = () => {
-    const [booleanData, setBooleanData] = useState(true); 
-    const [stringData, setStringData] = useState('Hello'); 
-    const [numberData, setNumberData] = useState(0); 
-    const [selectedCategory, setSelectedCategory] = useState('Option 1'); 
-    const [isValid, setIsValid] = useState({ booleanData: true, stringData: true, numberData: true, selectedCategory: true }); 
+    const [booleanData, setBooleanData] = useState(true);
+    const [stringData, setStringData] = useState('Hello');
+    const [numberData, setNumberData] = useState(0);
+    const [selectedCategory, setSelectedCategory] = useState('Option 1');
+    const [isValid, setIsValid] = useState({ booleanData: true, stringData: true, numberData: true, selectedCategory: true });
     const [isEditMode, setIsEditMode] = useState(false);
 
     const handleFieldValidity = (fieldName, isFieldValid) => {
@@ -41,54 +41,56 @@ const DataView = () => {
 
     return (
         <div className="dataView-container">
-            <div>
-                <BooleanFieldView
-                    title={schema.properties.booleanData.title}
-                    data={booleanData} 
-                    updateData={setBooleanData} 
-                    schema={schema.properties.booleanData} 
-                    updateIsValidMap={(isValid) => handleFieldValidity('booleanData', isValid)}
-                    isForEdit={isEditMode}
-                />
-            </div>
-            <div>
-                <StringFieldView
-                    title={stringSchema.title}
-                    data={stringData} 
-                    updateData={setStringData} 
-                    schema={stringSchema} 
-                    updateIsValidMap={(isValid) => handleFieldValidity('stringData', isValid)}
-                    isForEdit={isEditMode}
-                />
-            </div>
-            <div>
-                <NumberFieldView
-                    title={numberSchema.title}
-                    data={numberData} 
-                    updateData={setNumberData} 
-                    schema={numberSchema} 
-                    updateIsValidMap={(isValid) => handleFieldValidity('numberData', isValid)}
-                    isForEdit={isEditMode}
-                />
-            </div>
-            <div>
-                <CategoricalStringFieldView
-                    title={categorySchema.title}
-                    data={selectedCategory} 
-                    updateData={setSelectedCategory} 
-                    schema={categorySchema} 
-                    updateIsValidMap={(isValid) => handleFieldValidity('selectedCategory', isValid)}
-                    isForEdit={isEditMode}
-                />
-            </div>
+            <div className="input-fields-box">
+                <div>
+                    <BooleanFieldView
+                        title={schema.properties.booleanData.title}
+                        data={booleanData}
+                        updateData={setBooleanData}
+                        schema={schema.properties.booleanData}
+                        updateIsValidMap={(isValid) => handleFieldValidity('booleanData', isValid)}
+                        isForEdit={isEditMode}
+                    />
+                </div>
+                <div>
+                    <StringFieldView
+                        title={stringSchema.title}
+                        data={stringData}
+                        updateData={setStringData}
+                        schema={stringSchema}
+                        updateIsValidMap={(isValid) => handleFieldValidity('stringData', isValid)}
+                        isForEdit={isEditMode}
+                    />
+                </div>
+                <div>
+                    <NumberFieldView
+                        title={numberSchema.title}
+                        data={numberData}
+                        updateData={setNumberData}
+                        schema={numberSchema}
+                        updateIsValidMap={(isValid) => handleFieldValidity('numberData', isValid)}
+                        isForEdit={isEditMode}
+                    />
+                </div>
+                <div>
+                    <CategoricalStringFieldView
+                        title={categorySchema.title}
+                        data={selectedCategory}
+                        updateData={setSelectedCategory}
+                        schema={categorySchema}
+                        updateIsValidMap={(isValid) => handleFieldValidity('selectedCategory', isValid)}
+                        isForEdit={isEditMode}
+                    />
+                </div>
 
-            <div className="edit-button-container">
-                <button onClick={handleEditClick} disabled={isEditMode}>
-                    수정
-                </button>
-                <button onClick={handleSaveClick} disabled={!isEditMode || Object.values(isValid).includes(false)}>
-                    저장
-                </button>
+                <div className="edit-button-container">
+                    <button onClick={handleEditClick} disabled={isEditMode}>
+                        수정
+                    </button>
+                    <button onClick={handleSaveClick} disabled={!isEditMode || Object.values(isValid).includes(false)}>
+                        저장
+                    </button>
+                </div>
             </div>
         </div>
     );

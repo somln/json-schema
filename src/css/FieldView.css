@@ -1,0 +1,45 @@
+.field-container {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.field-title {
+    width: 100%;
+    text-align: left;
+}
+
+.field-title span {
+    font-size: 14px;
+    color: #8f8f8f;;
+}
+
+.field-input {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.edit-button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+/* 버튼 기본 스타일 */
+.edit-button-container button {
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border-radius: 8px; 
+    background-color: #4CAF50; 
+    border: #4CAF50;
+    color: white;
+}
+
+
+/* 비활성화된 버튼 스타일 */
+.edit-button-container button:disabled {
+    background-color: #cccccc; 
+    border: 2px solid #cccccc; 
+    color: #666666; 
+}
+

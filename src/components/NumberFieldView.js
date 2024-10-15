@@ -1,5 +1,6 @@
 import React from 'react';
 import Ajv from 'ajv';
+import '../css/FieldView.css'; 
 
 const NumberFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, schema }) => {
     const ajv = new Ajv();
@@ -16,11 +17,11 @@ const NumberFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit,
     };
 
     return (
-        <div className='number-field-container'>
-            <div className="string-field-title">
+        <div className="field-container">
+            <div className="field-title">
                 <span>{title}</span>
             </div>
-            <div className='number-field-input'>
+            <div className="field-input">
                 <input
                     type='number'
                     value={data}

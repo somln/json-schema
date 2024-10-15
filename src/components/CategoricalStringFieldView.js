@@ -1,5 +1,6 @@
 import React from "react";
 import Ajv from 'ajv';
+import '../css/FieldView.css'; 
 
 const CategoricalStringFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, schema }) => {
     const ajv = new Ajv();
@@ -16,11 +17,11 @@ const CategoricalStringFieldView = ({ title, data, updateData, updateIsValidMap,
     };
 
     return (
-        <div className="categorical-field-container">
-            <div className="categorical-field-title">
+        <div className="field-container">
+            <div className="field-title">
                 <span>{title}</span>
             </div>
-            <div className="categorical-field-input">
+            <div className="field-input">
                 <select
                     value={data}
                     onChange={handleValueChange}

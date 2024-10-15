@@ -1,7 +1,7 @@
 import React from 'react';
 import Switch from "react-switch";
 import Ajv from 'ajv';
-import '../css/BooleanFieldView.css'; 
+import '../css/FieldView.css'; 
 
 const BooleanFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, schema }) => {
     const ajv = new Ajv();
@@ -17,11 +17,11 @@ const BooleanFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit
     };
 
     return (
-        <div className="boolean-field-container">
-            <div className="boolean-field-title">
+        <div className="field-container">
+            <div className="field-title">
                 <span>{title}</span>
             </div>
-            <div className="boolean-field-switch">
+            <div className="field-input">
                 <Switch
                     checked={data}
                     onChange={handleValueChange}
