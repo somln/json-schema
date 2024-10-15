@@ -13,3 +13,10 @@
     border-radius: 8px;      /* 모서리 둥글게 */
     background-color: #f9f9f9; /* 배경 색상 */
 }
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    height: 16px; /* 에러 메시지 공간 고정 */
+}

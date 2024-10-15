@@ -9,6 +9,7 @@
         "type": "string",
         "minLength": 5,
         "maxLength": 20,
+        "pattern": "^[a-z0-9]+$",
         "title": "String Data"
       },
       "numberData": {

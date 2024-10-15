@@ -8,7 +8,7 @@ import schema from './dataSchema.json';
 
 const DataView = () => {
     const [booleanData, setBooleanData] = useState(true);
-    const [stringData, setStringData] = useState('Hello');
+    const [stringData, setStringData] = useState('hello');
     const [numberData, setNumberData] = useState(0);
     const [selectedCategory, setSelectedCategory] = useState('Option 1');
     const [isValid, setIsValid] = useState({ booleanData: true, stringData: true, numberData: true, selectedCategory: true });
