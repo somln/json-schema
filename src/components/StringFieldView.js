@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Ajv from 'ajv';
 import '../css/FieldView.css'; 
 
-const StringFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, schema }) => {
+const StringFieldView = ({ title, data, updateData, updateIsValid, isForEdit, schema }) => {
     const [errorMessage, setErrorMessage] = useState(''); 
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
@@ -11,7 +11,6 @@ const StringFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit,
         const newValue = e.target.value;
         if (isForEdit) {
             updateData(newValue);
-
             const valid = validate(newValue);
 
             if (!valid) {
@@ -26,7 +25,7 @@ const StringFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit,
                 setErrorMessage('');
             }
 
-            updateIsValidMap(valid);
+            updateIsValid(valid);
         }
     };
 

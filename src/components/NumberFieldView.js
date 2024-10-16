@@ -2,17 +2,15 @@ import React from 'react';
 import Ajv from 'ajv';
 import '../css/FieldView.css'; 
 
-const NumberFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit, schema }) => {
+const NumberFieldView = ({ title, data, updateData, updateIsValid, isForEdit, schema }) => {
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
 
     const handleValueChange = (e) => {
         const newValue = parseFloat(e.target.value);
-        if (isForEdit && !isNaN(newValue)) {
-            updateData(newValue);
-
-            const valid = validate(newValue);
-            updateIsValidMap(valid);
+        if (isForEdit) {
+            updateData(newValue); 
+            updateIsValid(validate(newValue));
         }
     };
 
@@ -27,7 +25,6 @@ const NumberFieldView = ({ title, data, updateData, updateIsValidMap, isForEdit,
                     value={data}
                     onChange={handleValueChange}
                     readOnly={!isForEdit}
-                    className='input-number'
                     min={schema.minimum}  
                     max={schema.maximum}  
                     step={1}  
