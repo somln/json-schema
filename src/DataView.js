@@ -16,13 +16,29 @@ const DataView = () => {
         const initialValid = {};
 
         Object.keys(schema.properties).forEach((key) => {
-            initialData[key] = ''; 
-            initialValid[key] = true; 
+            if (schema.properties[key].type === 'object') {  // type이 object인 경우
+                initialData[key] = {};
+                Object.keys(schema.properties[key].properties).forEach((subKey) => {
+                    const subFieldSchema = schema.properties[key].properties[subKey];
+
+                    if (subFieldSchema.type === 'number') {
+                        initialData[key][subKey] = subFieldSchema.minimum   // 초기값을 minimum으로 설정
+                    } else {
+                        initialData[key][subKey] = '';  // 그 외 타입은 빈 값으로 설정
+                    }
+                });
+            } else if (schema.properties[key].type === 'number') {
+                initialData[key] = schema.properties[key].minimum || 0;  // 숫자 타입에 대한 처리
+            } else {
+                initialData[key] = '';   // type이 object가 아닌 경우 
+            }
+            initialValid[key] = true;
         });
 
         setFormData(initialData);
         setIsValid(initialValid);
     }, []);
+
 
     const handleFieldValidity = (fieldName, isFieldValid) => {
         setIsValid((prevState) => ({
@@ -97,7 +113,21 @@ const DataView = () => {
                         isForEdit={isEditMode}
                     />
                 );
+            case 'object':
+                return (
+                    <div key={key} className="object-field">
+                        {/* 객체 필드의 제목을 h3 요소로 렌더링 */}
+                        <h3>{fieldSchema.title}</h3>
+
+                        {/* 객체 내부의 하위 필드들을 반복하면서 각각의 하위 필드를 렌더링 */}
+                        {Object.keys(fieldSchema.properties).map((subKey) => (
+                            // 각 하위 필드는 `${key}.${subKey}`로 고유한 키 값을 생성하여 다시 renderField를 호출
+                            renderField(`${key}.${subKey}`, fieldSchema.properties[subKey])
+                        ))}
+                    </div>
+                );
             default:
+                // 필드 타입이 정의된 케이스가 없을 때 null을 반환
                 return null;
         }
     };

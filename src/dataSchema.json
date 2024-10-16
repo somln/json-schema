@@ -1,29 +1,57 @@
 {
-    "type": "object",
-    "properties": {
-      "booleanData": {
-        "type": "boolean",
-        "title": "Boolean Data"
-      },
-      "stringData": {
-        "type": "string",
-        "minLength": 5,
-        "maxLength": 20,
-        "pattern": "^[a-z0-9]+$",
-        "title": "String Data"
-      },
-      "numberData": {
-        "type": "number",
-        "minimum": 0,
-        "maximum": 100,
-        "title": "Number Data"
-      },
-      "selectedCategory": {
-        "type": "string",
-        "enum": ["Option 1", "Option 2", "Option 3"],
-        "title": "Category Data"
-      }
+  "type": "object",
+  "properties": {
+    "booleanData": {
+      "type": "boolean",
+      "title": "Boolean Data"
     },
-    "required": ["booleanData", "stringData", "numberData", "selectedCategory"]
-  }
-  
+    "stringData": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 20,
+      "pattern": "^[a-z0-9]+$",
+      "title": "String Data"
+    },
+    "numberData": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "title": "Number Data"
+    },
+    "selectedCategory": {
+      "type": "string",
+      "enum": ["Option 1", "Option 2", "Option 3"],
+      "title": "Category Data"
+    },
+    "test": {
+      "type": "object",
+      "title": "Test Object",
+      "properties": {
+        "subBoolean": {
+          "type": "boolean",
+          "title": "Sub Boolean"
+        },
+        "subString": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 15,
+          "title": "Sub String"
+        },
+        "subNumber": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 50,
+          "title": "Sub Number"
+        },
+        "subCategory": {
+          "type": "string",
+          "enum": ["Option 1", "Option 2", "Option 3"],
+          "title": "Sub Category"
+        }
+
+      },
+      "required": ["subBoolean", "subString"]
+    }
+  },
+  "required": ["booleanData", "stringData", "numberData", "selectedCategory", "test"]
+}
