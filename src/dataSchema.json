@@ -10,7 +10,8 @@
       "minLength": 5,
       "maxLength": 20,
       "pattern": "^[a-z0-9]+$",
-      "title": "String Data"
+      "title": "String Data",
+      "default": "default"
     },
     "numberData": {
       "type": "number",
@@ -20,10 +21,15 @@
     },
     "selectedCategory": {
       "type": "string",
-      "enum": ["Option 1", "Option 2", "Option 3"],
-      "title": "Category Data"
+      "enum": [
+        "Option 1",
+        "Option 2",
+        "Option 3"
+      ],
+      "title": "Category Data",
+      "default": "Option 1"
     },
-    "test": {
+    "objectData": {
       "type": "object",
       "title": "Test Object",
       "properties": {
@@ -35,7 +41,8 @@
           "type": "string",
           "minLength": 3,
           "maxLength": 15,
-          "title": "Sub String"
+          "title": "Sub String",
+          "default": "hello"
         },
         "subNumber": {
           "type": "number",
@@ -45,13 +52,57 @@
         },
         "subCategory": {
           "type": "string",
-          "enum": ["Option 1", "Option 2", "Option 3"],
+          "enum": [
+            "Option 1",
+            "Option 2",
+            "Option 3"
+          ],
           "title": "Sub Category"
         }
-
       },
-      "required": ["subBoolean", "subString"]
+      "required": [
+        "subBoolean",
+        "subString"
+      ]
+    },
+    "ArrayData": {
+      "type": "array",
+      "title": "Test Array",
+      "items": {
+        "type": "object",  
+        "properties": {
+          "subString": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 15,
+            "title": "Sub String",
+            "default": "example",
+            "pattern": "^[a-z0-9]+$"
+          },
+          "subNumber": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 50,
+            "title": "Sub Number",
+            "default": 0
+          },
+          "subBoolean": {
+            "type": "boolean",
+            "title": "Sub Boolean"
+          }
+        },
+        "required": [
+          "subBoolean",
+          "subString"
+        ]
+      }
     }
   },
-  "required": ["booleanData", "stringData", "numberData", "selectedCategory", "test"]
+  "required": [
+    "booleanData",
+    "stringData",
+    "numberData",
+    "selectedCategory",
+    "objectData" 
+  ]
 }

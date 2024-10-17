@@ -3,12 +3,12 @@ import Switch from "react-switch";
 import Ajv from 'ajv';
 import '../css/FieldView.css'; 
 
-const BooleanFieldView = ({ title, data, updateData, updateIsValid, isForEdit, schema }) => {
+const BooleanFieldView = ({ title, data, updateData, updateIsValid, isEditMode, schema }) => {
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
 
     const handleValueChange = (newValue) => {   
-        if (isForEdit) {
+        if (isEditMode) {
             updateData(newValue);
             updateIsValid(validate(newValue));
         }
@@ -26,7 +26,7 @@ const BooleanFieldView = ({ title, data, updateData, updateIsValid, isForEdit, s
                     uncheckedIcon={false}
                     checkedIcon={false}
                     onColor={"#52b640"}
-                    readOnly={!isForEdit}
+                    readOnly={!isEditMode}
                 />
             </div>
         </div>

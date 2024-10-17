@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import BooleanFieldView from './components/BooleanFieldView';
 import StringFieldView from './components/StringFieldView';
 import NumberFieldView from './components/NumberFieldView';
 import CategoricalStringFieldView from './components/CategoricalStringFieldView';
+import ArrayFieldView from './components/ArrayFieldView';
 import './css/DataView.css';
 import schema from './dataSchema.json';
 
@@ -10,46 +11,18 @@ const DataView = () => {
     const [formData, setFormData] = useState({});
     const [isValid, setIsValid] = useState({});
     const [isEditMode, setIsEditMode] = useState(false);
-    
-    useEffect(() => {
-        const initialData = {};
-        const initialValid = {};
-
-        Object.keys(schema.properties).forEach((key) => {
-            if (schema.properties[key].type === 'object') {  
-                initialData[key] = {};
-                Object.keys(schema.properties[key].properties).forEach((subKey) => {
-                    const subFieldSchema = schema.properties[key].properties[subKey];
-
-                    if (subFieldSchema.type === 'number') {
-                        initialData[key][subKey] = subFieldSchema.minimum;;
-                    } else {
-                        initialData[key][subKey] = '';  
-                    }
-                });
-            } else if (schema.properties[key].type === 'number') {
-                initialData[key] = schema.properties[key].minimum;
-            } else {
-                initialData[key] = '';  
-            }
-            initialValid[key] = true;
-        });
-
-        setFormData(initialData);
-        setIsValid(initialValid);
-    }, []); 
 
     const handleFieldValidity = (fieldName, isFieldValid) => {
-        setIsValid((prevState) => ({
-            ...prevState,
-            [fieldName]: isFieldValid,
+        setIsValid((prevState) => ({    // isValid 객체를 업데이트
+            ...prevState,               
+            [fieldName]: isFieldValid,   // fieldName 키에 해당하는 값만 업데이트
         }));
     };
 
-    const handleFieldData = (fieldName, val) =>  { 
-        setFormData((prevState) => ({
-        ...prevState,
-        [fieldName]: val,  
+    const handleFieldData = (fieldName, val) =>  {   // formData 객체를 업데이트
+        setFormData((prevState) => ({        
+        ...prevState, 
+        [fieldName]: val,          // fieldName 키에 해당하는 값만 업데이트
         }));
     }; 
 
@@ -78,7 +51,7 @@ const DataView = () => {
                         updateData={(val) => handleFieldData(key, val)}
                         schema={fieldSchema}
                         updateIsValid={(isValid) => handleFieldValidity(key, isValid)}
-                        isForEdit={isEditMode}
+                        isEditMode={isEditMode}
                     />
                 );
             case 'string':
@@ -91,7 +64,7 @@ const DataView = () => {
                             updateData={(val) => handleFieldData(key, val)}
                             schema={fieldSchema}
                             updateIsValid={(isValid) => handleFieldValidity(key, isValid)}
-                            isForEdit={isEditMode}
+                            isEditMode={isEditMode}
                         />
                     );
                 } else {
@@ -103,7 +76,7 @@ const DataView = () => {
                             updateData={(val) => handleFieldData(key, val)}
                             schema={fieldSchema}
                             updateIsValid={(isValid) => handleFieldValidity(key, isValid)}
-                            isForEdit={isEditMode}
+                            isEditMode={isEditMode}
                         />
                     );
                 }
@@ -116,7 +89,7 @@ const DataView = () => {
                         updateData={(val) => handleFieldData(key, val)}
                         schema={fieldSchema}
                         updateIsValid={(isValid) => handleFieldValidity(key, isValid)}
-                        isForEdit={isEditMode}
+                        isEditMode={isEditMode}
                     />
                 );
             case 'object':
@@ -130,6 +103,20 @@ const DataView = () => {
                         ))}
                     </div>
                 );
+            case 'array':
+                return (
+                    <div key={key} className="array-field">
+                        <ArrayFieldView
+                        key={key} 
+                        title={fieldSchema.title}
+                        data={formData[key]}
+                        updateData={(val) => handleFieldData(key, val)}
+                        schema={fieldSchema}
+                        updateIsValid={(isValid) => handleFieldValidity(key, isValid)}
+                        isEditMode={isEditMode}
+                    />    
+                    </div>
+                )    
             default:
                 return null;
         }
@@ -159,3 +146,51 @@ const DataView = () => {
 };
 
 export default DataView;
+
+/*
+formData 객체의 구조 예시
+{
+  "booleanData": true,
+  "stringData": "validdata",
+  "numberData": 42,
+  "selectedCategory": "Option 2",
+  "objectData": {
+    "subBoolean": false,
+    "subString": "hello",
+    "subNumber": 25,
+    "subCategory": "Option 1"
+  },
+  "ArrayData": [
+    {
+      "subString": "item1",
+      "subNumber": 10,
+      "subBoolean": true
+    },
+    {
+      "subString": "item2",
+      "subNumber": 20,
+      "subBoolean": false
+    }
+  ]
+}
+*/
+
+/*
+isValid 객체의 구조 예시
+{
+  "booleanData": true,
+  "stringData": true,
+  "numberData": true,
+  "selectedCategory": true,
+  "objectData.subBoolean": true,
+  "objectData.subString": true,
+  "objectData.subNumber": true,
+  "objectData.subCategory": true,
+  "ArrayData.0.subString": true,
+  "ArrayData.0.subNumber": true,
+  "ArrayData.0.subBoolean": true,
+  "ArrayData.1.subString": true,
+  "ArrayData.1.subNumber": false,
+  "ArrayData.1.subBoolean": true
+}
+*/

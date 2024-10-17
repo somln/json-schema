@@ -2,13 +2,13 @@ import React from "react";
 import Ajv from 'ajv';
 import '../css/FieldView.css'; 
 
-const CategoricalStringFieldView = ({ title, data, updateData, updateIsValid, isForEdit, schema }) => {
+const CategoricalStringFieldView = ({ title, data, updateData, updateIsValid, isEditMode, schema }) => {
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
 
     const handleValueChange = (e) => {
         const newValue = e.target.value
-        if (isForEdit) {
+        if (isEditMode) {
             updateData(newValue); 
             updateIsValid(validate(newValue));
         }
@@ -23,7 +23,7 @@ const CategoricalStringFieldView = ({ title, data, updateData, updateIsValid, is
                 <select
                     value={data}
                     onChange={handleValueChange}
-                    readOnly={!isForEdit}
+                    readOnly={!isEditMode}
                 >
                     {schema.enum.map((option, index) => (
                         <option key={index} value={option}>

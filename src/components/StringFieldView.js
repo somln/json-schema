@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Ajv from 'ajv';
 import '../css/FieldView.css'; 
 
-const StringFieldView = ({ title, data, updateData, updateIsValid, isForEdit, schema }) => {
+const StringFieldView = ({ title, data, updateData, updateIsValid, isEditMode, schema }) => {
     const [errorMessage, setErrorMessage] = useState(''); 
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
 
     const handleValueChange = (e) => {
         const newValue = e.target.value;
-        if (isForEdit) {
+        if (isEditMode) {
             updateData(newValue);
             const valid = validate(newValue);
 
@@ -39,7 +39,8 @@ const StringFieldView = ({ title, data, updateData, updateIsValid, isForEdit, sc
                     type="text"
                     value={data}
                     onChange={handleValueChange}
-                    readOnly={!isForEdit}
+                    readOnly={!isEditMode}
+                    defaultValue={schema.default}
                     minLength={schema.minLength}
                     maxLength={schema.maxLength}
                     pattern={schema.pattern}
