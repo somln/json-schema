@@ -90,11 +90,7 @@
             "type": "boolean",
             "title": "Sub Boolean"
           }
-        },
-        "required": [
-          "subBoolean",
-          "subString"
-        ]
+        }
       }
     }
   },

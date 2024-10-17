@@ -21,7 +21,7 @@ const BooleanFieldView = ({ title, data, updateData, updateIsValid, isEditMode, 
             </div>
             <div className="field-input">
                 <Switch
-                    checked={data}
+                    checked={data !== undefined ? data : false} 
                     onChange={handleValueChange}
                     uncheckedIcon={false}
                     checkedIcon={false}

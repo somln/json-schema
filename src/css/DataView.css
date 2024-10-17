@@ -9,7 +9,7 @@
 .input-fields-box {
     border: 2px solid #ccc;  /* 테두리 */
     padding: 45px;           /* 내부 여백 */
-    margin-bottom: 20px;     /* 외부 여백 */
+    margin-bottom: 10px;     /* 외부 여백 */
     border-radius: 8px;      /* 모서리 둥글게 */
     background-color: #f9f9f9; /* 배경 색상 */
 }
@@ -19,4 +19,37 @@
     font-size: 12px;
     margin-top: 5px;
     height: 16px; /* 에러 메시지 공간 고정 */
+}
+
+h3 {
+    font-size: 15px;
+    text-align: center;
+    border-bottom:1px solid gray;
+    margin-bottom:px;
+    padding:15px;
+}
+
+.edit-button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+/* 버튼 기본 스타일 */
+.edit-button-container button {
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border-radius: 8px; 
+    background-color: #4CAF50; 
+    border: #4CAF50;
+    color: white;
+}
+
+
+/* 비활성화된 버튼 스타일 */
+.edit-button-container button:disabled {
+    background-color: #cccccc; 
+    border: 2px solid #cccccc; 
+    color: #666666; 
 }

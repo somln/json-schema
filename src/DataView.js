@@ -125,6 +125,7 @@ const DataView = () => {
     return (
         <div className="dataView-container">
             <div className="input-fields-box">
+            <h3>Test</h3>
                 {Object.keys(schema.properties).map((key) =>
                     renderField(key, schema.properties[key])
                 )}
