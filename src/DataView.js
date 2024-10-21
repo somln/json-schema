@@ -96,7 +96,6 @@ const DataView = () => {
                 return (
                     <div key={key} className="object-field">
                         <h3>{fieldSchema.title}</h3>
-
                         {/* 객체 내부의 하위 필드들을 반복하면서 각각의 하위 필드를 렌더링 */}
                         {Object.keys(fieldSchema.properties).map((subKey) => (
                             renderField(`${key}.${subKey}`, fieldSchema.properties[subKey])

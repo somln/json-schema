@@ -1,36 +1,29 @@
 import React, { useState } from 'react';
-import Ajv from 'ajv';
 import '../css/FieldView.css'; 
+import { validate } from '../validator';
 
 const StringFieldView = ({ title, data, updateData, updateIsValid, isEditMode, schema }) => {
-    const [errorMessage, setErrorMessage] = useState(''); 
-    const ajv = new Ajv();
-    const validate = ajv.compile(schema);
-
+    const [errorMessage, setErrorMessage] = useState('');
+    
     const handleValueChange = (e) => {
         const newValue = e.target.value;
         if (isEditMode) {
+
             updateData(newValue);
-            const valid = validate(newValue);
-
-            if (!valid) {
-                if (newValue.length < schema.minLength) {
-                    setErrorMessage(`최소 ${schema.minLength}자 이상이어야 합니다.`);
-                } else if (newValue.length > schema.maxLength) {
-                    setErrorMessage(`최대 ${schema.maxLength}자 이하이어야 합니다.`);
-                } else if (!new RegExp(schema.pattern).test(newValue)) {
-                    setErrorMessage("알파벳 소문자와 숫자만 입력 가능합니다.");
-                }
-            } else {
+            const valid = validate(schema, newValue);
+            if (valid) {
+                updateIsValid(true);
                 setErrorMessage('');
+            } else {
+                updateIsValid(false);
+                setErrorMessage('유효하지 않은 입력입니다.');
             }
-
-            updateIsValid(valid);
         }
     };
 
+
     return (
-        <div className="field-container">
+        <div className="field-container">  
             <div className="field-title">
                 <span>{title}</span>
             </div>

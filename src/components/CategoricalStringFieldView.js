@@ -1,16 +1,14 @@
 import React from "react";
-import Ajv from 'ajv';
 import '../css/FieldView.css'; 
+import { validate } from '../validator';
 
 const CategoricalStringFieldView = ({ title, data, updateData, updateIsValid, isEditMode, schema }) => {
-    const ajv = new Ajv();
-    const validate = ajv.compile(schema);
 
     const handleValueChange = (e) => {
-        const newValue = e.target.value
+        const newValue = e.target.value;
         if (isEditMode) {
             updateData(newValue); 
-            updateIsValid(validate(newValue));
+            updateIsValid(validate(schema, newValue));
         }
     };
 
@@ -22,8 +20,8 @@ const CategoricalStringFieldView = ({ title, data, updateData, updateIsValid, is
             <div className="field-input">
                 <select
                     value={data}
-                    onChange={handleValueChange}
-                    readOnly={!isEditMode}
+                    onChange={handleValueChange} 
+                    disabled={!isEditMode}
                 >
                     {schema.enum.map((option, index) => (
                         <option key={index} value={option}>
@@ -34,6 +32,6 @@ const CategoricalStringFieldView = ({ title, data, updateData, updateIsValid, is
             </div>
         </div>
     );
-};
+}
 
 export default CategoricalStringFieldView;

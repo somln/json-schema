@@ -42,7 +42,8 @@
           "minLength": 3,
           "maxLength": 15,
           "title": "Sub String",
-          "default": "hello"
+          "default": "hello",
+          "pattern": "^[a-z0-9]+$"
         },
         "subNumber": {
           "type": "number",

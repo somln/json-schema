@@ -1,16 +1,13 @@
 import React from 'react';
 import Switch from "react-switch";
-import Ajv from 'ajv';
 import '../css/FieldView.css'; 
 
 const BooleanFieldView = ({ title, data, updateData, updateIsValid, isEditMode, schema }) => {
-    const ajv = new Ajv();
-    const validate = ajv.compile(schema);
 
     const handleValueChange = (newValue) => {   
         if (isEditMode) {
             updateData(newValue);
-            updateIsValid(validate(newValue));
+            updateIsValid(title);
         }
     };
 

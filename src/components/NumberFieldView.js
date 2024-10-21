@@ -1,16 +1,15 @@
 import React from 'react';
-import Ajv from 'ajv';
 import '../css/FieldView.css'; 
+import { validate } from '../validator';
 
 const NumberFieldView = ({ title, data, updateData, updateIsValid, isEditMode, schema }) => {
-    const ajv = new Ajv();
-    const validate = ajv.compile(schema);
 
     const handleValueChange = (e) => {
+
         const newValue = parseFloat(e.target.value);
         if (isEditMode) {
             updateData(newValue); 
-            updateIsValid(validate(newValue));
+            updateIsValid(validate(schema, newValue));
         }
     };
 
